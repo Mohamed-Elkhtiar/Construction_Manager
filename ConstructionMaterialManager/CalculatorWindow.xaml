@@ -16,7 +16,7 @@
                     <!--Element type-->
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Element Type"></Label>
-                        <ComboBox x:Name="ElementTypeComboBox" SelectionChanged="ElementTypeComboBox_SelectionChanged" />
+                        <ComboBox x:Name="ElementTypeComboBox" />
                     </StackPanel>
                     <!--Element Length-->
                     <StackPanel Orientation="Horizontal">
@@ -75,14 +75,14 @@
 
                     <!-- Bar Diameter -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Bar Diameter" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="cmbBarDiameter" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding BarDiamters}"  Margin="0,5"/>
+                    <ComboBox x:Name="cmbBarDiameter" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding BarDiamters}"  Margin="0,5" SelectionChanged="cmbBarDiameter_SelectionChanged"/>
 
                     <!-- Bar Length -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Bar Length (m)" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtBarLength" Grid.Row="1" Grid.Column="1" Margin="0,5"/>
+                    <TextBox x:Name="txtBarLength" Text="12"  Grid.Row="1" Grid.Column="1" Margin="0,5" TextChanged="txtBarLength_TextChanged"/>
                     <!-- Number of Bars -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of Bars" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtNumberOfBars" Grid.Row="2" Grid.Column="1" Margin="0,5"/>
+                    <TextBox x:Name="txtNumberOfBars" Grid.Row="2" Grid.Column="1" Margin="0,5" TextChanged="txtNumberOfBars_TextChanged"/>
 
                     <!-- Calculate Button -->
                     <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
@@ -90,7 +90,7 @@
                             Height="30"
                             Content="Calculate" 
                             Margin="0,10" 
-                            Click="CalculateSteelButton_Click"/>
+                            Click="Btn_CalculateSteel"/>
 
                     <!-- Result  -->
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Weight Per bar (kg)" />
@@ -105,7 +105,71 @@
 
 
             <TabItem Header="Paint Calculator">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        
+                    </Grid.RowDefinitions>
 
+                    <!-- Surface Type -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Surface Type" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbSurfaceType" Grid.Row="0" Grid.Column="1"   Margin="0,5" />
+
+                    <!-- Surface Area -->
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Surface Area (m²)" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="1" Grid.Column="1" >
+                        <StackPanel  Orientation="Horizontal" Margin="0,5">
+                            <RadioButton x:Name="rdSurfaceAreabyArea" Content="By Area" Width="100" IsChecked="True" Checked="rdSurfaceAreabyArea_Checked"/>
+                            <RadioButton x:Name="rdSurfaceAreabyLengthWidth" Content="By Length and Width" Width="150" Checked="rdSurfaceAreabyLengthWidth_Checked" />
+                        </StackPanel>
+                        <StackPanel  x:Name="pnlArea" >
+                            <Label Content="Area (m²)"/>
+                            <TextBox x:Name="txtSurfaceArea"  Margin="0,5" />
+                        </StackPanel>
+                        <StackPanel  x:Name="pnlLengthWidth"  Visibility="Collapsed">
+                            <Label Content="Length (m)"/>
+                            <TextBox x:Name="txtLength"  Margin="0,5" />
+                            <Label Content="Width (m)"/>
+                            <TextBox x:Name="txtWidth"  Margin="0,5" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Number of Coats -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of Coats" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbNumberOfCoats" Grid.Row="2" Grid.Column="1" 
+                                Margin="0,5"
+                                SelectedIndex="0">
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                    </ComboBox>
+                    <!--Coverage Rate-->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Coverage Rate (m²/litre)" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtPaintCoverage" Grid.Row="3" Grid.Column="1" Margin="0,5" Text="12" />
+
+                    <!-- Calculate Button -->
+                    <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+             Width="200" 
+             Height="30"
+             Content="Calculate" 
+             Margin="0,10" 
+             Click="Btn_CalculatePaint"/>
+
+                    <!-- Result  -->
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Litres (lit)" />
+                    <TextBlock x:Name="tbResultLitres" Grid.Row="5" Grid.Column="1"  />
+                    
+                </Grid>
             </TabItem>
 
 
