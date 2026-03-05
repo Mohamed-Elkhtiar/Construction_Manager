@@ -174,7 +174,57 @@
 
 
             <TabItem Header="Tails Calculator">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <!--Room Length (m) -->
+                    <!--TextBox 
+                    Positive decimal-->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Room Length (m)" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtRoomLength" Grid.Row="0" Grid.Column="1" Margin="0,5" />
 
+                    <!--Room Width (m) 
+                    TextBox 
+                    Positive decimal-->
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Room Width (m)" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtRoomWidth" Grid.Row="1" Grid.Column="1" Margin="0,5" />
+                    <!--Tile Size 
+                    ComboBox 
+                    20×20, 30×30, 40×40, 60×60, 80×80 (cm)-->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Tile Size" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbTileSize" Grid.Row="2" Grid.Column="1" Margin="0,5" />
+                    <!--
+                    
+                    Waste Percentage 
+                    TextBox 
+                    Default: 10%, range 5-20%-->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Waste Percentage (%)" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtWastePercentage" Grid.Row="3" Grid.Column="1" Margin="0,5" Text="10" />
+
+                    <!--Calculate Button-->
+                    <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+                            Width="200" 
+                            Height="30"
+                            Content="Calculate" 
+                            Margin="0,10" 
+                            Click="Btn_CalculateTiles"/>
+
+                    <!--Result-->
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Tiels" />
+                    <TextBlock x:Name="tbResultTiles" Grid.Row="5" Grid.Column="1"  />
+
+                </Grid>
             </TabItem>
             
             
