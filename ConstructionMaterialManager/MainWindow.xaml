@@ -5,12 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ConstructionMaterialManager"
         xmlns:vm="clr-namespace:ConstructionMaterialManager.ViewModle"
+        xmlns:m="clr-namespace:ConstructionMaterialManager.Modle"
         
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
     <Window.DataContext>
         <vm:MainWindowVM/>
+       
+
     </Window.DataContext>
+    
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -54,7 +58,7 @@
             
             
         </UniformGrid>
-        <DataGrid Height="200" DockPanel.Dock="Top" ItemsSource="{Binding Materials}" AutoGenerateColumns="False" Margin="10">
+        <DataGrid Height="200" DockPanel.Dock="Top" ItemsSource="{Binding Source={x:Static m:AppData.Materials}}" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>

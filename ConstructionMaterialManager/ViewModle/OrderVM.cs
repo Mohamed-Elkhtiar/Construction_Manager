@@ -136,14 +136,7 @@ namespace ConstructionMaterialManager.ViewModle
             }
         }
 
-        private ObservableCollection<Order> _Orders = new ObservableCollection<Order>
-            {
-                new Order { OrderNumber = 1, MaterialName = "Cement", Category = "Concrete", Quantity = 100, Unit = "Bag", UnitPrice = 5.00m, Total = 500.00m, Date = DateTime.Now, Status = "Pending" },
-                new Order { OrderNumber = 2, MaterialName = "Steel", Category = "Steel", Quantity = 10, Unit = "Ton", UnitPrice = 500.00m, Total = 5000.00m, Date = DateTime.Now, Status = "Delivered" },
-                new Order { OrderNumber = 3, MaterialName = "Bricks", Category = "Paint", Quantity = 1000, Unit = "Piece", UnitPrice = 0.50m, Total = 500.00m, Date = DateTime.Now, Status = "Pending" },
-                new Order { OrderNumber = 4, MaterialName = "Tiles", Category = "Tiles", Quantity = 200, Unit = "m²", UnitPrice = 10.00m, Total = 2000.00m, Date = DateTime.Now, Status = "Delivered" },
-                new Order { OrderNumber = 5, MaterialName = "Paint", Category = "Paint", Quantity = 50, Unit = "Liter", UnitPrice = 20.00m, Total = 1000.00m, Date = DateTime.Now, Status = "Pending" }
-            };
+        private ObservableCollection<Order> _Orders = AppData.Orders;
 
         public ObservableCollection<Order> Orders
         {

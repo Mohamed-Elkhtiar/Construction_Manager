@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ConstructionMaterialManager.Modle;
+using ConstructionMaterialManager.ViewModle;
 
 namespace ConstructionMaterialManager
 {
@@ -36,10 +39,11 @@ namespace ConstructionMaterialManager
             cmbSurfaceType.SelectedIndex = 0;
         }
 
-
+        public ObservableCollection<Material> CurrentTabMaterials { get; set; }
+        public Material SelectedMaterial { get; set; }
         public decimal Volume { get; set; }
 
-
+        public decimal Result { get; set; }
 
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -50,7 +54,8 @@ namespace ConstructionMaterialManager
             {
                 Volume = length * width * depth * quantity;
                 ResultVolumeTextBlock.Text = Volume.ToString("F2");
-                ResultWithWasteValueTextBlock.Text = (Volume * 1.1m).ToString("F2");
+                Result = Volume * 1.1m;
+                ResultWithWasteValueTextBlock.Text = Result.ToString("F2");
             }
             else
             {
@@ -81,7 +86,8 @@ namespace ConstructionMaterialManager
                 decimal totalWeight = weightPerBar * numberOfBars;
                 tbWeightPerBar.Text = weightPerBar.ToString("F3") + " kg";
                 tbTotalWeight.Text = (totalWeight / 1000).ToString("F3") + " Tons";
-                tbWeightWithWaste.Text = (totalWeight * 1.05m / 1000).ToString("F3") + " Tons";
+                Result = totalWeight * 1.05m / 1000;
+                tbWeightWithWaste.Text = Result.ToString("F3") + " Tons";
             }
             else
             {
@@ -178,9 +184,9 @@ namespace ConstructionMaterialManager
                 return;
             }
 
-            decimal paintRequired = area * numbOfCoats / coverage;
+             Result = area * numbOfCoats / coverage;
 
-            tbResultLitres.Text = paintRequired.ToString("F2") + " Litres";
+            tbResultLitres.Text = Result.ToString("F2") + " Litres";
         }
 
         private void Btn_CalculateTiles(object sender, RoutedEventArgs e)
@@ -204,7 +210,7 @@ namespace ConstructionMaterialManager
             }
             //Tile Size
             //ComboBox
-            //20×20, 30×30, 40×40, 60×60, 80×80(cm)
+            //20x20, 30x30, 40x40, 60x60, 80x80(cm)
             if (cmbTileSize.SelectedItem == null)
             {
                 MessageBox.Show("Please select a tile size.");
@@ -219,8 +225,8 @@ namespace ConstructionMaterialManager
                 return;
             }
             decimal tilesArea = GetTileArea(cmbTileSize.SelectedItem.ToString());
-            decimal output = (roomLength * roomWidth / tilesArea)* (1 + wastePercentage / 100m);
-            tbResultTiles.Text = output.ToString("F2") + " m²";
+            Result = (roomLength * roomWidth / tilesArea)* (1 + wastePercentage / 100m);
+            tbResultTiles.Text = Result.ToString("F2") ;
         }
         public decimal GetTileArea(string tileSize)
         {
@@ -230,6 +236,55 @@ namespace ConstructionMaterialManager
             return (length / 100m) * (width / 100m); 
             }
 
+        
+        private void TabSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Result = 0;
+            if (!(e.Source is  TabControl)) return;
+
+            string category = ((TabItem)((TabControl)sender).SelectedItem).Header.ToString();
+            CurrentTabMaterials = new ObservableCollection<Material>(
+                AppData.Materials
+                       .Where(m => m.Category == category));
+
+            cmbMaterialOrder.ItemsSource = CurrentTabMaterials.Select(a=>a.Name ).ToList();
+
         }
+
+        private void Btn_CreateOrder(object sender, RoutedEventArgs e)
+        {
+            if(cmbMaterialOrder.SelectedItem == null||tbQuantity==null)
+            {
+                MessageBox.Show("Please select a material to create an order.");
+                return;
+            }
+            MessageBox.Show($"Order created for {tbQuantity.Text} units of {cmbMaterialOrder.SelectedItem.ToString()} with total cost {tbTotalCost.Text}");
+        }
+        public void CleanResults()
+        {
+            tbQuantity.Text = string.Empty;
+            tbUnitPrice.Text = string.Empty;
+            tbTotalCost.Text = string.Empty;    
+        }
+        private void cmbMaterialOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbMaterialOrder.SelectedItem == null)
+            {
+                CleanResults();
+                return;
+            }
+             SelectedMaterial = CurrentTabMaterials.Where(s=>s.Name == cmbMaterialOrder.SelectedItem.ToString()).FirstOrDefault();
+            if (SelectedMaterial != null)
+            {
+                
+                tbQuantity.Text = Result.ToString("F2");
+                tbUnitPrice.Text = SelectedMaterial.UnitPrice.ToString("F2");
+                tbTotalCost.Text = (Result * SelectedMaterial   .UnitPrice).ToString("F2");
+
+            }
+        }
+
+
+    }
     }
 

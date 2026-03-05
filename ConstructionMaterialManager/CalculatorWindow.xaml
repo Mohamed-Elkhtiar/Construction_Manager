@@ -8,10 +8,14 @@
         Title="CalculatorWindow" Height="450" Width="800">
    
     <Grid>
-        <TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TabControl SelectionChanged="TabSelectionChanged">
             
             <!--concrete-->
-            <TabItem Header="Concrete Calculator">
+            <TabItem Header="Concrete" Width="100">
                 <StackPanel Margin="10,0">
                     <!--Element type-->
                     <StackPanel Orientation="Horizontal">
@@ -57,7 +61,7 @@
             </TabItem>
 
 
-            <TabItem Header="Steel Calculator">
+            <TabItem Header="Steel" Width="100">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -104,7 +108,7 @@
             </TabItem>
 
 
-            <TabItem Header="Paint Calculator">
+            <TabItem Header="Paint" Width="100">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -173,7 +177,7 @@
             </TabItem>
 
 
-            <TabItem Header="Tails Calculator">
+            <TabItem Header="Tiles" Width="100">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -229,5 +233,33 @@
             
             
         </TabControl>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Material"/>
+            <ComboBox x:Name="cmbMaterialOrder" Grid.Row="0" Grid.Column="1"   SelectionChanged="cmbMaterialOrder_SelectionChanged" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Quantity"/>
+            <TextBlock x:Name="tbQuantity" Grid.Row="1" Grid.Column="1" Margin="0,5" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Unit Price"/>
+            <TextBlock x:Name="tbUnitPrice" Grid.Row="2" Grid.Column="1" Margin="0,5" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Total Cost"/>
+            <TextBlock x:Name="tbTotalCost" Grid.Row="3" Grid.Column="1" Margin="0,5" />
+            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+                    Width="200" 
+                    Height="30"
+                    Content="Create Order" 
+                    Margin="0,10" 
+                    Click="Btn_CreateOrder"/>
+
+        </Grid>
+        
     </Grid>
 </Window>
