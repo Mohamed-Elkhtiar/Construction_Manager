@@ -1,0 +1,119 @@
+﻿<Window x:Class="ConstructionMaterialManager.CalculatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConstructionMaterialManager"
+        mc:Ignorable="d"
+        Title="CalculatorWindow" Height="450" Width="800">
+   
+    <Grid>
+        <TabControl>
+            
+            <!--concrete-->
+            <TabItem Header="Concrete Calculator">
+                <StackPanel Margin="10,0">
+                    <!--Element type-->
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Element Type"></Label>
+                        <ComboBox x:Name="ElementTypeComboBox" SelectionChanged="ElementTypeComboBox_SelectionChanged" />
+                    </StackPanel>
+                    <!--Element Length-->
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Element Length"></Label>
+                        <TextBox x:Name="ElementLengthTextBox" Width="200" />
+                    </StackPanel>
+                    <!--Element Width-->
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Element Width"></Label>
+                        <TextBox x:Name="ElementWidthTextBox" Width ="200" />
+                    </StackPanel>
+                    <!--Element Depth-->
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Element Depth/Height"></Label>
+                        <TextBox x:Name="ElementDepthTextBox" Width ="200" />
+                    </StackPanel>
+                    <!--Element Count-->
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Quantity"></Label>
+                        <TextBox x:Name="QuantityTextBox" Width ="200" />
+                    </StackPanel>
+
+                    <Button Content="Calculate" Width="100" Margin="0,10,0,0" Click="CalculateButton_Click"/>
+
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="16" FontWeight="Bold" Margin="0,10,0,0" Text="Volume = "/>
+                            <TextBlock x:Name="ResultVolumeTextBlock" FontSize="16" FontWeight="Bold" Margin="0,10,0,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="16" FontWeight="Bold" Margin="0,10,0,0" Text="Volume with 10% waste = "/>
+                            <TextBlock x:Name="ResultWithWasteValueTextBlock" FontSize="16" FontWeight="Bold" Margin="0,10,0,0" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                
+                
+            </TabItem>
+
+
+            <TabItem Header="Steel Calculator">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Bar Diameter -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Bar Diameter" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbBarDiameter" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding BarDiamters}"  Margin="0,5"/>
+
+                    <!-- Bar Length -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Bar Length (m)" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtBarLength" Grid.Row="1" Grid.Column="1" Margin="0,5"/>
+                    <!-- Number of Bars -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of Bars" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtNumberOfBars" Grid.Row="2" Grid.Column="1" Margin="0,5"/>
+
+                    <!-- Calculate Button -->
+                    <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                            Width="200" 
+                            Height="30"
+                            Content="Calculate" 
+                            Margin="0,10" 
+                            Click="CalculateSteelButton_Click"/>
+
+                    <!-- Result  -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Weight Per bar (kg)" />
+                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="tbWeightPerBar" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Total Weight (Tons)" />
+                    <TextBlock Grid.Row="5" Grid.Column="1" x:Name="tbTotalWeight" />
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="With 5% Waste (Tons)" />
+                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="tbWeightWithWaste" />
+                </Grid>
+
+            </TabItem>
+
+
+            <TabItem Header="Paint Calculator">
+
+            </TabItem>
+
+
+            <TabItem Header="Tails Calculator">
+
+            </TabItem>
+            
+            
+        </TabControl>
+    </Grid>
+</Window>

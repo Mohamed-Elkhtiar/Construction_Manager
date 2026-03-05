@@ -1,0 +1,97 @@
+﻿<Window x:Class="ConstructionMaterialManager.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConstructionMaterialManager"
+        xmlns:vm="clr-namespace:ConstructionMaterialManager.ViewModle"
+        mc:Ignorable="d"
+
+        Title="OrderWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:OrderVM/>
+
+    </Window.DataContext>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Filters -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- ===== FILTERS ===== -->
+        <WrapPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+
+            <TextBlock Text="Search:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox x:Name="TxtSearch" Text="{Binding FilterOrderByName, UpdateSourceTrigger=PropertyChanged}" Width="150" Margin="0,0,15,0"/>
+
+            <TextBlock Text="Category:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox ItemsSource="{Binding CategoriesFilter }" 
+                      SelectedItem="{Binding SelectedCategory ,Mode=TwoWay}" Width="130" Margin="0,0,15,0">
+               
+            </ComboBox>
+
+            <TextBlock Text="Status:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox ItemsSource="{Binding StatusOptions}" 
+                      SelectedItem="{Binding SelectedStatus,Mode=TwoWay}" Width="110" Margin="0,0,15,0">
+            </ComboBox>
+
+            <TextBlock Text="From:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <DatePicker  SelectedDate="{Binding StartDate, Mode=TwoWay}" Width="130" Margin="0,0,15,0"/>
+
+            <TextBlock Text="To:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}" Width="130" Margin="0,0,15,0"/>
+
+        </WrapPanel>
+
+        <!-- ===== DATAGRID ===== -->
+        <DataGrid Grid.Row="1"
+                  x:Name="OrdersGrid"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  SelectionMode="Extended"
+                  Margin="0,0,0,8"
+                  ItemsSource="{Binding CurrentViewedOrders}"
+                  SelectedItem="{Binding SelectedOrder, Mode=TwoWay}">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="#"          Binding="{Binding OrderNumber}"    Width="50"/>
+                <DataGridTextColumn Header="Material"   Binding="{Binding MaterialName}" Width="*"/>
+                <DataGridTextColumn Header="Category"   Binding="{Binding Category}" Width="130"/>
+                <DataGridTextColumn Header="Qty"        Binding="{Binding Quantity}"      Width="80"/>
+                <DataGridTextColumn Header="Price"      Binding="{Binding UnitPrice}"    Width="100"/>
+                <DataGridTextColumn Header="Total"      Binding="{Binding Total}"    Width="100"/>
+                <DataGridTextColumn Header="Status"     Binding="{Binding Status}"   Width="100"/>
+                <DataGridTextColumn Header="Date"       Binding="{Binding Date, StringFormat=dd/MM/yyyy}" Width="110"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- ===== FOOTER ===== -->
+        <DockPanel Grid.Row="2">
+
+            <!-- Stats -->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                <TextBlock Text="Orders: "/>
+                <TextBlock x:Name="TxtOrderCount" Text="{Binding CurrentViewedOrders.Count}" FontWeight="Bold" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Total: EGP "/>
+                <TextBlock x:Name="TxtTotal"      Text="{Binding TotalEGP }" FontWeight="Bold" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Pending: "/>
+                <TextBlock x:Name="TxtPending"    Text="{Binding  PendingOrdersCount}" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                <Button x:Name="BtnMarkDelivered" Command="{Binding MarkedDeliverd}" Content="Mark Delivered" Margin="0,0,8,0" Padding="10,5" />
+                <Button x:Name="BtnDelete"        Content="Delete"         Margin="0,0,8,0" Padding="10,5" />
+                <Button x:Name="BtnExport"        Content="Export Summary"                  Padding="10,5" />
+            </StackPanel>
+
+        </DockPanel>
+    </Grid>
+</Window>
